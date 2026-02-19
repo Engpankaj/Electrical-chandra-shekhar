@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Chandra Shekhar Electrical Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for project page */
+        .projects-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+            background: linear-gradient(135deg, #1A535C 0%, #4ECDC4 100%);
+            text-align: center;
+        }
+        
+        .projects-hero h1 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .projects-hero p {
+            font-size: 1.3rem;
+            color: var(--accent);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Overlapping Gallery Grid - Masonry Style */
+        .projects-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .project-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Overlapping sizes for visual interest */
+        .project-card:nth-child(4n+1) {
+            width: 300px;
+            height: 350px;
+            margin-top: 0;
+        }
+        
+        .project-card:nth-child(4n+2) {
+            width: 280px;
+            height: 320px;
+            margin-top: 40px;
+        }
+        
+        .project-card:nth-child(4n+3) {
+            width: 320px;
+            height: 380px;
+            margin-top: 20px;
+        }
+        
+        .project-card:nth-child(4n+4) {
+            width: 260px;
+            height: 300px;
+            margin-top: 60px;
+        }
+        
+        /* Make project images overlap */
+        .project-card {
+            transform: rotate(-2deg);
+        }
+        
+        .project-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        
+        .project-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 83, 92, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-overlay i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .project-overlay span {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        /* Videos Section */
+        .videos-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+        }
+        
+        .videos-section .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .videos-section .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        
+        .videos-section .section-header p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .video-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #000;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        
+        .video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .video-card:hover video {
+            transform: scale(1.05);
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .video-card:hover .video-controls {
+            opacity: 1;
+        }
+        
+
+        
+        .play-btn i {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-left: 5px;
+        }
+        
+        .video-card:hover .play-btn {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--primary);
+        }
+        
+        .video-title {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            background: var(--background);
+            padding: 80px 20px;
+        }
+        
+        .profile-section .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .profile-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 3/4;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .profile-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .profile-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--white);
+        }
+        
+        .profile-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-overlay p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .back-btn:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .project-card:nth-child(4n+1),
+            .project-card:nth-child(4n+2),
+            .project-card:nth-child(4n+3),
+            .project-card:nth-child(4n+4) {
+                width: 250px;
+                height: 290px;
+                margin-top: 20px;
+            }
+            
+            .videos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .projects-hero {
+                min-height: 50vh;
+                padding: 100px 20px 40px;
+            }
+            
+            .projects-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .projects-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .projects-grid {
+                padding: 30px 10px;
+                gap: 20px;
+            }
+            
+            /* Mobile overlapping cards */
+            .project-card:nth-child(4n+1),
+            .project-card:nth-child(4n+2),
+            .project-card:nth-child(4n+3),
+            .project-card:nth-child(4n+4) {
+                width: 160px;
+                height: 190px;
+                margin-top: 15px;
+            }
+            
+            .project-card {
+                transform: rotate(-1deg);
+            }
+            
+            .project-card:nth-child(even) {
+                transform: rotate(1deg);
+            }
+            
+            .project-card:hover {
+                transform: rotate(0deg) scale(1.08);
+            }
+            
+            .project-overlay i {
+                font-size: 1.8rem;
+            }
+            
+            .project-overlay span {
+                font-size: 0.85rem;
+            }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-btn {
+                bottom: 20px;
+                left: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .projects-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                padding: 20px 5px;
+                gap: 15px;
+            }
+            
+            .project-card:nth-child(4n+1),
+            .project-card:nth-child(4n+2),
+            .project-card:nth-child(4n+3),
+            .project-card:nth-child(4n+4) {
+                width: 140px;
+                height: 170px;
+                margin-top: 10px;
+            }
+            
+            .project-overlay i {
+                font-size: 1.5rem;
+            }
+            
+            .project-overlay span {
+                font-size: 0.75rem;
+            }
+            
+            .play-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .play-btn i {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Chandra Shekhar</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#projects">Gallery</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Projects Hero -->
+    <section class="projects-hero">
+        <div>
+            <h1>My Projects</h1>
+            <p>A collection of my electrical work and completed projects showcasing quality craftsmanship</p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section id="projects" class="gallery-section">
+        <div class="section-header">
+            <span class="section-subtitle">Photo Gallery</span>
+            <h2>Working Photos</h2>
+            <p style="color: var(--text-secondary);">Click on any photo to view in full size</p>
+        </div>
+        
+        <div class="gallery-grid">
+            <!-- Photo 1 -->
+            <div class="gallery-item">
+                <img src="photo 1.jpeg" alt="Electrical Work 1">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 2 -->
+            <div class="gallery-item">
+                <img src="photo2.jpeg" alt="Electrical Work 2">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 3 -->
+            <div class="gallery-item">
+                <img src="photo3.jpeg" alt="Electrical Work 3">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 4 -->
+            <div class="gallery-item">
+                <img src="photo4.jpeg" alt="Electrical Work 4">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 5 -->
+            <div class="gallery-item">
+                <img src="photo5.jpeg" alt="Electrical Work 5">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 6 -->
+            <div class="gallery-item">
+                <img src="photo6.jpeg" alt="Electrical Work 6">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 7 -->
+            <div class="gallery-item">
+                <img src="photo7.jpeg" alt="Electrical Work 7">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 8 -->
+            <div class="gallery-item">
+                <img src="photo8.jpeg" alt="Electrical Work 8">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 9 -->
+            <div class="gallery-item">
+                <img src="photo9.jpeg" alt="Electrical Work 9">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 10 -->
+            <div class="gallery-item">
+                <img src="photo10.jpeg" alt="Electrical Work 10">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 11 -->
+            <div class="gallery-item">
+                <img src="photo11.jpeg" alt="Electrical Work 11">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 12 -->
+            <div class="gallery-item">
+                <img src="photo12.jpeg" alt="Electrical Work 12">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 13 -->
+            <div class="gallery-item">
+                <img src="photo13.jpeg" alt="Electrical Work 13">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Photo 14 -->
+            <div class="gallery-item">
+                <img src="photo14.jpeg" alt="Electrical Work 14">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>View Photo</span>
+                </div>
+            </div>
+            
+            <!-- Additional Project Images from index.html -->
+            <div class="gallery-item">
+                <img src="pannel installation.png" alt="Panel Installation">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>Panel Installation</span>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="house wiring.png" alt="House Wiring">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>House Wiring</span>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="led lighting.png" alt="LED Lighting">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>LED Lighting</span>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="fan fitting.png" alt="Fan Fitting">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>Fan Fitting</span>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="switch board fitting.png" alt="Switch Board">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>Switch Board</span>
+                </div>
+            </div>
+            
+            <div class="gallery-item">
+                <img src="ac wiring.png" alt="AC Wiring">
+                <div class="gallery-overlay">
+                    <i class="fas fa-plus"></i>
+                    <span>AC Wiring</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section class="videos-section">
+        <div class="section-header">
+            <span class="section-subtitle" style="background: var(--accent); color: var(--text-primary);">Video Gallery</span>
+            <h2>Work Videos</h2>
+            <p>Click on any video to play</p>
+        </div>
+        
+        <div class="videos-grid">
+            <!-- Video 1 -->
+            <div class="video-card">
+                <video src="video1.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 1</div>
+                <div class="play-btn">
+                </div>
+            </div>
+            
+            <!-- Video 2 -->
+            <div class="video-card">
+                <video src="video2.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 2</div>
+                <div class="play-btn">
+                </div>
+            </div>
+            
+            <!-- Video 3 -->
+            <div class="video-card">
+                <video src="video3.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 3</div>
+                <div class="play-btn">
+                </div>
+            </div>
+            
+            <!-- Video 4 -->
+            <div class="video-card">
+                <video src="video4.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 4</div>
+                <div class="play-btn">
+                </div>
+            </div>
+            
+            <!-- Video 5 -->
+            <div class="video-card">
+                <video src="video5.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 5</div>
+                <div class="play-btn">
+                </div>
+            </div>
+            
+            <!-- Video 6 -->
+            <div class="video-card">
+                <video src="video6.mp4" preload="metadata" controls muted playsinline loop></video>
+                <div class="video-title">Project Video 6</div>
+                <div class="play-btn">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="profile-section">
+        <div class="section-header">
+            <span class="section-subtitle">About Me</span>
+            <h2>Chandra Shekhar</h2>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                My name is Chandra Shekhar, and I am a professional electrician with over 10 years of hands-on experience in residential and commercial electrical work. I specialize in house wiring, panel installation, switchboard fitting, fan installation, LED lighting setup, AC wiring, and complete electrical maintenance services.
+            </p>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 20px auto 0; line-height: 1.8;">
+                I am committed to delivering safe, high-quality, and timely work on every project. Customer satisfaction is my top priority, and I ensure that every task is completed with precision and responsibility.
+            </p>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 20px auto 0; line-height: 1.8;">
+                If you are looking for reliable electrical installation, repair, or maintenance services, I am always ready to assist you.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>Chandra Shekhar</span>
+                    <p>Professional Electrician Services</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="project.html">Projects</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>House Wiring</li>
+                        <li>Commercial Wiring</li>
+                        <li>Electrical Repairs</li>
+                        <li>Installation</li>
+                        <li>Maintenance</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +91 7078787773</p>
+                    <p><i class="fas fa-envelope"></i> chandrashekhar@email.com</p>
+                    <p><i class="fas fa-map-marker"></i> Service Area: All Over City</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Chandra Shekhar Electrician. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a href=""><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/917078787773?text=Hello%20Chandra%20Shekhar%2C%20I%20need%20electrical%20service"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <span class="lightbox-next">&#10095;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <!-- Back Button -->
+    <!-- <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a> -->
+
+    <script src="script.js"></script>
+</body>
+</html>
