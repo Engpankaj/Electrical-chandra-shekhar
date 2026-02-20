@@ -449,147 +449,67 @@ document.addEventListener('DOMContentLoaded', function() {
             const fileName = `Service_Request_${data.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
             doc.save(fileName);
 
-            showSuccessMessage();
+            // Automatically share to WhatsApp after PDF is generated
+            setTimeout(() => {
+                shareToWhatsApp();
+            }, 1000);
+
+            // Show a brief success notification
+            showSuccessNotification();
         }
 
-        function showSuccessMessage() {
-            const modal = document.createElement('div');
-            modal.className = 'success-modal';
-            modal.innerHTML = `
-                <div class="success-content">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Success!</h3>
-                    <p>Your service request has been submitted successfully.</p>
-                    <p>The PDF has been downloaded to your device.</p>
-                    <div class="whatsapp-btn-container">
-                        <button onclick="shareToWhatsApp()" class="btn-whatsapp">
-                            <i class="fab fa-whatsapp"></i> Share on WhatsApp
-                        </button>
-                        <p class="whatsapp-note">Click to open WhatsApp and attach the downloaded PDF</p>
-                    </div>
-                    <button onclick="closeModal()" class="btn-ok">OK</button>
+        function showSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div class="success-notification">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Form submitted! Opening WhatsApp...</span>
                 </div>
             `;
             
-            modal.style.cssText = `
+            notification.style.cssText = `
                 position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.7);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 3000;
-                animation: fadeIn 0.3s ease;
-            `;
-            
-            const content = modal.querySelector('.success-content');
-            content.style.cssText = `
-                background: white;
-                padding: 40px;
-                border-radius: 20px;
-                text-align: center;
-                max-width: 400px;
-                animation: slideUp 0.3s ease;
-            `;
-            
-            const icon = modal.querySelector('.success-icon');
-            icon.style.cssText = `
-                font-size: 4rem;
-                color: #4ECDC4;
-                margin-bottom: 20px;
-            `;
-            
-            modal.querySelector('h3').style.cssText = `
-                font-size: 1.5rem;
-                color: #2D3047;
-                margin-bottom: 10px;
-            `;
-            
-            modal.querySelectorAll('p').forEach(p => {
-                p.style.cssText = `
-                    color: #6B7280;
-                    margin-bottom: 8px;
-                `;
-            });
-            
-            const whatsappContainer = modal.querySelector('.whatsapp-btn-container');
-            whatsappContainer.style.cssText = `
-                margin: 20px 0;
-            `;
-            
-            const btnWhatsapp = modal.querySelector('.btn-whatsapp');
-            btnWhatsapp.style.cssText = `
+                top: 20px;
+                right: 20px;
                 background: #25D366;
                 color: white;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 25px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                display: inline-flex;
+                padding: 15px 25px;
+                border-radius: 10px;
+                display: flex;
                 align-items: center;
                 gap: 10px;
-                transition: transform 0.2s;
+                z-index: 4000;
+                animation: slideInRight 0.3s ease;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             `;
             
-            btnWhatsapp.onmouseover = () => btnWhatsapp.style.transform = 'scale(1.05)';
-            btnWhatsapp.onmouseout = () => btnWhatsapp.style.transform = 'scale(1)';
-            
-            const whatsappNote = modal.querySelector('.whatsapp-note');
-            whatsappNote.style.cssText = `
-                font-size: 0.85rem;
-                color: #888;
-                margin-top: 8px;
+            notification.querySelector('i').style.cssText = `
+                font-size: 1.2rem;
             `;
             
-            const btnOk = modal.querySelector('.btn-ok');
-            btnOk.style.cssText = `
-                background: linear-gradient(135deg, #FF6B35, #FF8C42);
-                color: white;
-                border: none;
-                padding: 12px 40px;
-                border-radius: 25px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                margin-top: 10px;
-                transition: transform 0.2s;
+            notification.querySelector('span').style.cssText = `
+                font-size: 0.95rem;
+                font-weight: 500;
             `;
             
-            btnOk.onmouseover = () => btnOk.style.transform = 'scale(1.05)';
-            btnOk.onmouseout = () => btnOk.style.transform = 'scale(1)';
+            document.body.appendChild(notification);
             
-            window.currentModal = modal;
-            
-            document.body.appendChild(modal);
-            
-            serviceForm.reset();
-            
+            // Add animation styles
             const style = document.createElement('style');
             style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideUp {
-                    from { transform: translateY(30px); opacity: 0; }
-                    to { transform: translateY(0); opacity: 1; }
+                @keyframes slideInRight {
+                    from { transform: translateX(100px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
                 }
             `;
             document.head.appendChild(style);
-        }
-
-        function closeModal() {
-            if (window.currentModal) {
-                window.currentModal.remove();
-                window.currentModal = null;
-            }
+            
+            // Auto-remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+            
+            serviceForm.reset();
         }
 
         function shareToWhatsApp() {
@@ -618,8 +538,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
-            
-            closeModal();
         }
     }
 
