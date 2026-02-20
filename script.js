@@ -528,14 +528,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const encodedMessage = encodeURIComponent(message);
             
-            let userPhone = phone.replace(/\D/g, '');
+            // Business phone number: 7078787773 (with country code: 917078787773)
+            const businessPhone = '917078787773';
             
-            if (userPhone.length === 10 && /^[6-9]/.test(userPhone)) {
-                userPhone = '91' + userPhone;
-            }
-            
-            const whatsappNumber = userPhone;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            const whatsappUrl = `https://wa.me/${businessPhone}?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
         }
