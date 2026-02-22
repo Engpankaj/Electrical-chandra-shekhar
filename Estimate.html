@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Estimate - Chandra Shekhar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .estimate-section {
+            padding: 120px 20px 80px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #FF6B35 100%);
+        }
+
+        .estimate-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .estimate-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .estimate-header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .estimate-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .estimate-table-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .estimate-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .estimate-table thead {
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+        }
+
+        .estimate-table th {
+            padding: 15px 10px;
+            text-align: left;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .estimate-table th:first-child {
+            border-radius: 10px 0 0 0;
+            width: 50px;
+            text-align: center;
+        }
+
+        .estimate-table th:last-child {
+            border-radius: 0 10px 0 0;
+            width: 80px;
+        }
+
+        .estimate-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8rem;
+        }
+
+        .estimate-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .estimate-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .estimate-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .estimate-table tbody tr:nth-child(even):hover {
+            background: #f5f5f5;
+        }
+
+        .estimate-table td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .estimate-table td:nth-child(2) {
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .estimate-input {
+            width: 90%;
+            padding: 6px 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .estimate-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .estimate-input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .qty-input {
+            width: 70px;
+            text-align: center;
+        }
+
+        .section-heading {
+            background: linear-gradient(135deg, #1A535C, #4ECDC4) !important;
+            color: white !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            padding: 12px 10px !important;
+            text-align: center !important;
+        }
+
+        .section-heading td {
+            text-align: center !important;
+            color: white !important;
+            font-weight: 700 !important;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-estimate {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-print {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #134a4f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(26, 83, 92, 0.4);
+        }
+
+        .btn-clear {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #c82333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.4);
+        }
+
+        .note-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7fff7;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .note-section h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .note-section p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .estimate-section {
+                padding: 90px 10px 50px;
+            }
+
+            .estimate-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .estimate-header p {
+                font-size: 0.9rem;
+            }
+
+            .estimate-table-wrapper {
+                padding: 15px;
+                border-radius: 15px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .estimate-table {
+                font-size: 0.7rem;
+                min-width: 550px;
+            }
+
+            .estimate-table th {
+                padding: 10px 6px;
+                font-size: 0.65rem;
+            }
+
+            .estimate-table td {
+                padding: 6px 4px;
+                font-size: 0.65rem;
+            }
+
+            .estimate-input {
+                padding: 5px 6px;
+                font-size: 0.65rem;
+            }
+
+            .qty-input {
+                width: 55px;
+            }
+
+            .section-heading {
+                font-size: 0.8rem !important;
+                padding: 10px 6px !important;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .btn-estimate {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .note-section {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .estimate-section {
+                padding: 85px 8px 40px;
+            }
+
+            .estimate-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .estimate-table {
+                min-width: 500px;
+                font-size: 0.65rem;
+            }
+
+            .estimate-input {
+                padding: 4px 5px;
+                font-size: 0.6rem;
+            }
+
+            .qty-input {
+                width: 50px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .estimate-section, .estimate-section * {
+                visibility: visible;
+            }
+            .estimate-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding: 20px;
+                background: white;
+            }
+            .estimate-table-wrapper {
+                box-shadow: none;
+                padding: 10px;
+            }
+            .action-buttons, .note-section, .navbar, .footer {
+                display: none !important;
+            }
+            .estimate-header h1 {
+                color: #333;
+                font-size: 1.5rem;
+            }
+            .estimate-header p {
+                color: #666;
+            }
+            .section-heading {
+                background: #1A535C !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .estimate-table thead {
+                background: #FF6B35 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <span>Chandra Shekhar</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="project.html">Gallery</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="Estimate.html">Estimate</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="index.html#about">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Estimate Section -->
+    <section class="estimate-section">
+        <div class="estimate-container">
+            <div class="estimate-header">
+                <h1><i class="fas fa-calculator"></i> Material Estimate</h1>
+                <p>Fill in the details below to calculate your material requirements</p>
+            </div>
+
+            <div class="estimate-table-wrapper">
+                <table class="estimate-table" id="estimateTable">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Material Name</th>
+                            <th>Size / Type / mm</th>
+                            <th>Qty.</th>
+                        </tr>  
+                    </thead>
+                    <tbody>
+                        <tr class="section-heading">
+                            <td colspan="4">WALL PIPING ESTIMATES</td>
+                        </tr>
+                        <tr><td>1</td><td>PVC Conduit Pipe</td><td><input type="text" class="estimate-input" placeholder="25mm (1.5mm)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>2</td><td>PVC Conduit Pipe</td><td><input type="text" class="estimate-input" placeholder="20mm (1.5mm)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>3</td><td>PVC Conduit Pipe</td><td><input type="text" class="estimate-input" placeholder="25mm (2mm)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>4</td><td>PVC Conduit Pipe</td><td><input type="text" class="estimate-input" placeholder="20mm (2mm)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>5</td><td>PVC Bend</td><td><input type="text" class="estimate-input" placeholder="25mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>6</td><td>PVC Bend</td><td><input type="text" class="estimate-input" placeholder="20mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>7</td><td>Coupling / Socket</td><td><input type="text" class="estimate-input" placeholder="25mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>8</td><td>Coupling / Socket</td><td><input type="text" class="estimate-input" placeholder="20mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>9</td><td>Junction Box</td><td><input type="text" class="estimate-input" placeholder="25mm (1/2 Way)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>10</td><td>Junction Box</td><td><input type="text" class="estimate-input" placeholder="20mm (1/2 Way)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>11</td><td>Junction Box</td><td><input type="text" class="estimate-input" placeholder="25mm (3/4 Way)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>12</td><td>Junction Box</td><td><input type="text" class="estimate-input" placeholder="20mm (3/4 Way)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>13</td><td>Deep Box</td><td><input type="text" class="estimate-input" placeholder="25mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>14</td><td>Deep Box</td><td><input type="text" class="estimate-input" placeholder="20mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>15</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="2M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>16</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="3M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>17</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="4M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>18</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="6M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>19</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="8M (Square)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>20</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="8M (Rectangular)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>21</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="12M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>22</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="18M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>23</td><td>Fan Box</td><td><input type="text" class="estimate-input" placeholder="20mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>24</td><td>Saddle / Kaju Clip</td><td><input type="text" class="estimate-input" placeholder="25mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>25</td><td>Saddle / Kaju Clip</td><td><input type="text" class="estimate-input" placeholder="20mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>26</td><td>Rawal Plug</td><td><input type="text" class="estimate-input" placeholder="____ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>27</td><td>Screw</td><td><input type="text" class="estimate-input" placeholder="____ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>28</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">WIRING ESTIMATES</td></tr>
+                        <tr><td>29</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="0.75 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>30</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="1 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>31</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="1.5 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>32</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="2.5 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>33</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="4 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>34</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="6 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>35</td><td>Copper Wire</td><td><input type="text" class="estimate-input" placeholder="10 mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>36</td><td>Armoured Cable</td><td><input type="text" class="estimate-input" placeholder="2 Core"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>37</td><td>Armoured Cable</td><td><input type="text" class="estimate-input" placeholder="4 Core"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>38</td><td>DTH Cable</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>39</td><td>Speaker Wire</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>40</td><td>Camera Wire</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>41</td><td>Wire Spring</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>42</td><td>GI Earthing Wire</td><td><input type="text" class="estimate-input" placeholder="___ kg"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>43</td><td>Earthing Wire</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>44</td><td>Earthing Plate</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>45</td><td>Brass Nut Bolt</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>46</td><td>Charcoal</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>47</td><td>Salt</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>48</td><td>Earthing Chemical</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>49</td><td>GI Rod</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>50</td><td>Copper Rod</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>51</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">SWITCH BOARD ESTIMATES</td></tr>
+                        <tr><td>52</td><td>Switch</td><td><input type="text" class="estimate-input" placeholder="6 Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>53</td><td>Switch</td><td><input type="text" class="estimate-input" placeholder="16 Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>54</td><td>DP Switch</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>55</td><td>Bell Switch</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>56</td><td>Two Way Switch</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>57</td><td>Indicator</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>58</td><td>5 Pin Socket</td><td><input type="text" class="estimate-input" placeholder="6 Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>59</td><td>5 Pin Socket</td><td><input type="text" class="estimate-input" placeholder="16 Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>60</td><td>2 Pin Socket</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>61</td><td>USB Socket</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>62</td><td>Regulator</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>63</td><td>Dummy (Damy)</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>64</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="1 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>65</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="2 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>66</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="3 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>67</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="4 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>68</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="6 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>69</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="8 Module (Square)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>70</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="8 Module (Rectangular)"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>71</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="12 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>72</td><td>Modular Plate</td><td><input type="text" class="estimate-input" placeholder="18 Module"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>73</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="2M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>74</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="3M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>75</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="4M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>76</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="6M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>77</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="8M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>78</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="12M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>79</td><td>Metal Box</td><td><input type="text" class="estimate-input" placeholder="18M"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>80</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>81</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="1 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>82</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="1.5 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>83</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="2 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>84</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="2.5 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>85</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="4 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>86</td><td>Rawal Plug</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">LIGHTING ESTIMATES</td></tr>
+                        <tr><td>87</td><td>LED Bulb</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>88</td><td>Tube Light</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>89</td><td>Panel Light (Square)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>90</td><td>Panel Light (Round)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>91</td><td>COB Light (Square)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>92</td><td>COB Light (Round)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>93</td><td>Surface Light</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>94</td><td>Foot Light</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>95</td><td>Rope Light</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>96</td><td>Rope Light Adapter</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>97</td><td>Strip Light</td><td><input type="text" class="estimate-input" placeholder="___ LED"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>98</td><td>Strip Channel</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>99</td><td>Strip Adapter</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>100</td><td>Angle Holder</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>101</td><td>Batten Holder</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>102</td><td>Pendant Holder</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>103</td><td>Ceiling Rose</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>104</td><td>Round Dummy Sheet</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>105</td><td>Fan Dummy Sheet</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>106</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">STRIP LIGHT ESTIMATES</td></tr>
+                        <tr><td>107</td><td>Strip Light</td><td><input type="text" class="estimate-input" placeholder="___ LED"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>108</td><td>Strip Channel</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>109</td><td>Strip Adapter / Driver</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>110</td><td>Rope Light</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>111</td><td>Rope Light Adapter</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>112</td><td>COB Light (Square)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>113</td><td>COB Light (Round)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>114</td><td>Panel Light (Square)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>115</td><td>Panel Light (Round)</td><td><input type="text" class="estimate-input" placeholder="___ W"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>116</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>117</td><td>PVC Cable Tie</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>118</td><td>Connector Pin (Strip)</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>119</td><td>Extension Wire</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">EARTHING ESTIMATES</td></tr>
+                        <tr><td>120</td><td>Earthing Wire</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>121</td><td>GI Earthing Wire</td><td><input type="text" class="estimate-input" placeholder="___ kg"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>122</td><td>Earthing Plate</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>123</td><td>Copper Plate</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>124</td><td>GI Rod</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>125</td><td>Copper Rod</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>126</td><td>Brass Nut Bolt</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>127</td><td>Charcoal</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>128</td><td>Salt</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>129</td><td>Earthing Chemical</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>130</td><td>Terminal Block</td><td><input type="text" class="estimate-input" placeholder="___ Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>131</td><td>Bus Bar</td><td><input type="text" class="estimate-input" placeholder="___ Amp"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>132</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr class="section-heading"><td colspan="4">CASING CAPPING ESTIMATES</td></tr>
+                        <tr><td>133</td><td>Casing Capping</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>134</td><td>Coupling</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>135</td><td>Elbow Joint</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>136</td><td>Tee Joint</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>137</td><td>Doctor Joint</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>138</td><td>Internal Bend</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>139</td><td>External Bend</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>140</td><td>Reducer</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>141</td><td>Square Box</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>142</td><td>Junction Box</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>143</td><td>Round Block</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>144</td><td>Panel Trunking</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>145</td><td>Electrical Gang Box</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>146</td><td>MCB Board</td><td><input type="text" class="estimate-input" placeholder="___ Way"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>147</td><td>MCB Board (Metal)</td><td><input type="text" class="estimate-input" placeholder="___ Way"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>148</td><td>Saddle Clip</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>149</td><td>Rawal Plug</td><td><input type="text" class="estimate-input" placeholder="___ mm"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>150</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="1 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>151</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="1.5 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>152</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="2 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>153</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="2.5 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>154</td><td>Star Screw</td><td><input type="text" class="estimate-input" placeholder="4 inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>155</td><td>Indicator Bulb</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>156</td><td>3/16 Bolt</td><td><input type="text" class="estimate-input" placeholder="___ inch"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                        <tr><td>157</td><td>Insulation Tape</td><td><input type="text" class="estimate-input" placeholder="—"></td><td><input type="number" class="estimate-input qty-input" placeholder="0" min="0"></td></tr>
+                    </tbody>
+                </table>
+
+                <div class="action-buttons">
+                    <button class="btn-estimate btn-print" onclick="savePDF()">
+                        <i class="fas fa-file-pdf"></i> Save PDF
+                    </button>
+                    <button class="btn-estimate btn-clear" onclick="clearEstimate()">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+
+                <div class="note-section">
+                    <h4><i class="fas fa-info-circle"></i> Note</h4>
+                    <p>This is a preliminary material estimate. Final quantities may vary based on actual site inspection. Please contact Chandra Shekhar for accurate quotations and professional guidance on material selection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>Chandra Shekhar</span>
+                    <p>Professional Electrician Services</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="project.html">Projects</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>House Wiring</li>
+                        <li>Commercial Wiring</li>
+                        <li>Electrical Repairs</li>
+                        <li>Installation</li>
+                        <li>Maintenance</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +91 7078787773</p>
+                    <p><i class="fas fa-envelope"></i> chandrashekhar@email.com</p>
+                    <p><i class="fas fa-map-marker"></i> Service Area: All Over City</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Chandra Shekhar Electrician. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/917078787773?text=Hello%20Chandra%20Shekhar%2C%20I%20need%20electrical%20service"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Save PDF Function - generates PDF with only user-filled data
+        async function savePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const primaryColor = [255, 107, 53];
+            const secondaryColor = [26, 83, 92];
+            const textColor = [45, 48, 71];
+            
+            // Header
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, 0, 210, 25, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('CHANDRA SHEKHAR', 105, 10, { align: 'center' });
+            
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'normal');
+            doc.text('Material Estimate', 105, 16, { align: 'center' });
+            
+            // Date
+            doc.setTextColor(...textColor);
+            doc.setFontSize(9);
+            const today = new Date().toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            doc.text('Date: ' + today, 190, 32, { align: 'right' });
+            
+            // Column headers
+            let yPos = 40;
+            doc.setFillColor(...secondaryColor);
+            doc.rect(10, yPos, 190, 8, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.text('S.No', 12, yPos + 5.5);
+            doc.text('Material Name', 30, yPos + 5.5);
+            doc.text('Size/Type', 110, yPos + 5.5);
+            doc.text('Qty.', 175, yPos + 5.5);
+            
+            yPos += 12;
+            
+            // Get all rows and filter only filled data
+            const rows = document.querySelectorAll('#estimateTable tbody tr');
+            let serialNo = 1;
+            let currentSection = '';
+            
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(...textColor);
+            
+            rows.forEach(row => {
+                // Check if it's a section heading
+                if (row.classList.contains('section-heading')) {
+                    const sectionText = row.querySelector('td').textContent;
+                    if (sectionText !== currentSection) {
+                        currentSection = sectionText;
+                        yPos += 5;
+                        
+                        // Check if we need a new page
+                        if (yPos > 270) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
+                        
+                        doc.setFillColor(240, 240, 240);
+                        doc.rect(10, yPos - 3, 190, 7, 'F');
+                        doc.setTextColor(...secondaryColor);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setFontSize(10);
+                        doc.text(sectionText, 105, yPos + 1, { align: 'center' });
+                        yPos += 10;
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(9);
+                        doc.setTextColor(...textColor);
+                    }
+                    return;
+                }
+                
+                // Get input values
+                const inputs = row.querySelectorAll('input');
+                const qtyInput = inputs[1]; // Second input is quantity
+                const sizeInput = inputs[0]; // First input is size
+                const materialName = row.querySelector('td:nth-child(2)').textContent;
+                
+                // Only include rows where quantity > 0
+                const qty = parseInt(qtyInput.value) || 0;
+                if (qty > 0) {
+                    // Check if we need a new page
+                    if (yPos > 270) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    
+                    // Get user-filled size (or leave empty if not filled)
+                    const size = sizeInput.value || '';
+                    
+                    // Draw row
+                    doc.setDrawColor(220, 220, 220);
+                    doc.line(10, yPos - 1, 200, yPos - 1);
+                    
+                    doc.text(serialNo.toString(), 12, yPos + 2);
+                    doc.text(materialName.substring(0, 35), 30, yPos + 2);
+                    doc.text(size.substring(0, 25), 110, yPos + 2);
+                    doc.text(qty.toString(), 180, yPos + 2);
+                    
+                    serialNo++;
+                    yPos += 7;
+                }
+            });
+            
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFillColor(...secondaryColor);
+                doc.rect(0, 285, 210, 12, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(8);
+                doc.text('Generated by Chandra Shekhar Electrical Services | Contact: +91 7078787773', 105, 291, { align: 'center' });
+                doc.text('Page ' + i + ' of ' + pageCount, 195, 291, { align: 'right' });
+            }
+            
+            // Save the PDF
+            const fileName = 'Material_Estimate_' + new Date().toISOString().split('T')[0] + '.pdf';
+            doc.save(fileName);
+        }
+
+        // Clear Estimate Function
+        function clearEstimate() {
+            if (confirm('Are you sure you want to clear all entries?')) {
+                const inputs = document.querySelectorAll('.estimate-table input');
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
